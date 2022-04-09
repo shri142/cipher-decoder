@@ -41,3 +41,35 @@ def encrypt_rot13(message, key=13):
     return encryption_result
 
 print(encrypt_rot13("o"))
+
+
+import tkinter
+from tkinter import ttk
+
+main_window = tkinter.Tk()
+
+main_window.geometry("800x800")
+
+new_combo_box = ttk.Combobox(values = [
+    "David",
+    "Alex"
+])
+new_combo_box.grid(row = 0, column = 0)
+new_combo_box.current(1)
+
+def get_combo_value():
+    the_value = new_combo_box.get()
+    return the_value
+
+selected = get_combo_value()
+
+execute_button = tkinter.Button(text = "select", command = get_combo_value)
+execute_button.grid(row = 1, column = 0)
+
+change_label = tkinter.Label(text = selected)
+change_label.grid(row = 2, column = 0)
+change_label.update()
+
+print(selected)
+
+main_window.mainloop()
