@@ -98,3 +98,100 @@ def move_text_to_decrypt_box():
             else:
                 alphabet_postion = 0
             return alphabet_postion
+
+            # this rotates the letters
+            def rotate(letter, rotate_value):
+                if letter.isupper():
+                    shift_value = 65
+                if letter.islower():
+                    shift_value = 97
+
+                return chr((ord(letter) + rotate_value - shift_value) % 26 + shift_value)
+
+            # encryption function
+            def vigenere_encryption(message, key):
+                encrypted_message = []
+                starting_index = 0
+                for letter in message:
+                    # checking if the letter is alpha
+                    rotation = check_alphabet_position(key[starting_index])
+                    # check if letter is not alpha
+                    if letter not in sorted_dictionary:
+                        encrypted_message.append(letter)
+                    elif letter.isalpha():
+                        encrypted_message.append(rotate(letter, rotation))
+
+                    # checking if keyword has reached the end
+                    if starting_index == (len(key) - 1):
+                        starting_index = 0
+                    else:
+                        starting_index += 1
+
+                return "".join(encrypted_message)
+
+            empty_message = "Error! The encryption box or shifter key box is empty\n"
+            moving_text = encryption_box.get("1.0", mn.tkinter.END)
+            shifter_key_number = shifter_key_box.get("1.0", mn.tkinter.END[:3])
+            # check if there is a empty error message
+            if empty_message in moving_text:
+                encryption_box.delete("1.0", mn.tkinter.END)
+
+            elif (len(moving_text) < 2) or len(shifter_key_number) < 2:
+                # checking if the text box is empty
+                decrption_box.insert("1.0", empty_message)
+
+            else:
+                # encrypting the data and inserting it to the decryption box
+                decrption_box.insert("1.0", vigenere_encryption(moving_text, str(shifter_key_number)))
+                encryption_box.delete("1.0", mn.tkinter.END)
+                # -----------------------------------------------------------------------------------------------------------
+
+    # move decrypted text
+    def move_text_to_encrypted_box():
+
+        if (the_cipher_value == "caesar cipher"):
+            shifter_key_number = 13
+            # check for an empty error message
+            empty_message = "Error! The encryption box or shifter key box is empty\n"
+            moving_text = decrption_box.get("1.0", mn.tkinter.END)
+            shifter_key_number = shifter_key_box.get("1.0", mn.tkinter.END)
+
+            # checking if the decryption box has an error message
+            if empty_message in moving_text:
+                decrption_box.delete("1.0", mn.tkinter.END)
+            # check if the decryption box is empty
+            elif len(moving_text) < 2 or len(shifter_key_number) < 2:
+                encryption_box.insert("1.0", empty_message)
+            # decrypt the message and send it to the encryption box
+            else:
+                encryption_box.insert("1.0",
+                                      mn.MainWindow.decryption(moving_text, moving_text, int(shifter_key_number)))
+                decrption_box.delete("1.0", mn.tkinter.END)
+
+        elif (the_cipher_value == "ROT13"):
+            # check for an empty error message
+            empty_message = "Error! The encryption box or shifter key box is empty\n"
+            moving_text = decrption_box.get("1.0", mn.tkinter.END)
+            shifter_key_number = shifter_key_box.get("1.0", mn.tkinter.END)
+
+            # checking if the decryption box has an error message
+            if empty_message in moving_text:
+                decrption_box.delete("1.0", mn.tkinter.END)
+            # check if the decryption box is empty
+            elif len(moving_text) < 2 or len(shifter_key_number) < 2:
+                encryption_box.insert("1.0", empty_message)
+            # decrypt the message and send it to the encryption box
+            else:
+                encryption_box.insert("1.0",
+                                      mn.MainWindow.decrypt_rot13(moving_text, moving_text, int(shifter_key_number)))
+                decrption_box.delete("1.0", mn.tkinter.END)
+
+    # create a title
+    placeholder_label = mn.tkinter.Label(text="                     ", font=("times", 20), bg="light blue")
+    placeholder_label.grid(row=0, column=0)
+
+    title_label = mn.tkinter.Label(text="Cryptographic Ciphers", font=("times", 20), bg="light grey")
+    title_label.grid(row=0, column=1)
+
+    placeholder_label = mn.tkinter.Label(text="                      ", font=("times", 20), bg="light blue")
+    placeholder_label.grid(row=0, column=2)
