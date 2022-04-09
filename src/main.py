@@ -130,6 +130,28 @@ class MainWindow(tkinter.Tk):
 
             return chr((ord(letter) + rotate_value - shift_value) % 26 + shift_value)
 
+            # encryption function
+
+        def vigenere_encryption(self, message, key):
+            encrypted_message = []
+            starting_index = 0
+            for letter in message:
+                # checking if the letter is alpha
+                rotation = self.check_alphabet_position(key[starting_index])
+                # check if letter is not alpha
+                if not letter in self.sorted_dictionary:
+                    encrypted_message.append(letter)
+                elif letter.isalpha():
+                    encrypted_message.append(self.rotate(letter, rotation))
+
+                # checking if keyword has reached the end
+                if starting_index == (len(key) - 1):
+                    starting_index = 0
+                else:
+                    starting_index += 1
+
+            return "".join(encrypted_message)
+
 
 
 root_window = MainWindow()
