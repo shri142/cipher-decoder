@@ -100,6 +100,36 @@ class MainWindow(tkinter.Tk):
                     decryption_result += letter
         return decryption_result
 
+        # -------------------------------------------------------------------------------------------------------------
+
+        pattern = {}
+        dictionary = pattern.fromkeys(ascii_letters)
+        sorted_dictionary = {}
+
+        # assigning values
+        counter = 0
+        counter2 = 0
+        for key, value in dictionary.items():
+            if counter <= 25:
+                value = counter
+                counter += 1
+                sorted_dictionary[key] = value
+            else:
+                value = counter2
+                counter2 += 1
+                sorted_dictionary[key] = value
+
+        # print(sorted_dictionary)
+
+        # this rotates the letters
+        def rotate(self, letter, rotate_value):
+            if letter.isupper():
+                shift_value = 65
+            if letter.islower():
+                shift_value = 97
+
+            return chr((ord(letter) + rotate_value - shift_value) % 26 + shift_value)
+
 
 
 root_window = MainWindow()
