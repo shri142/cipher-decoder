@@ -1,5 +1,6 @@
 import tkinter
-from tkinter import ttk
+
+from tkinter import *
 from string import ascii_letters
 
 # main class
@@ -23,3 +24,7 @@ class MainWindow(tkinter.Tk):
         root_window=MainWindow()
         if __name__ == "__main__":
             root_window.mainloop()
+
+
+
+
