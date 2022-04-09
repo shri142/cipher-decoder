@@ -73,3 +73,80 @@ change_label.update()
 print(selected)
 
 main_window.mainloop()
+
+# vigenere cipher
+
+"""
+alphabet = a b c d e f g h 
+keys     = 1 2 3 4 5 6 7 9 
+keyword = "bad" 
+           214
+plain_text        =     "adefhcba"
+                         badbadba
+shift_by                 21421421
+encrypted_message =      ceihigdb
+"""
+from string import ascii_letters
+
+pattern = {}
+dictionary = pattern.fromkeys(ascii_letters)
+sorted_dictionary = {}
+
+# assigning values
+counter = 0
+counter2 = 0
+for key, value in dictionary.items():
+    if counter <= 25:
+        value = counter
+        counter += 1
+        sorted_dictionary[key] = value
+    else:
+        value = counter2
+        counter2 += 1
+        sorted_dictionary[key] = value
+
+
+# print(sorted_dictionary)
+
+# check the alphabet position
+def check_alphabet_position(letter):
+    alphabet_postion = sorted_dictionary[letter]
+    return alphabet_postion
+
+
+# this rotates the letters
+def rotate(letter, rotate_value):
+    if letter.isupper():
+        shift_value = 65
+    if letter.islower():
+        shift_value = 97
+
+    return chr((ord(letter) + rotate_value - shift_value) % 26 + shift_value)
+
+
+# encryption function
+def vigenere_encryption(message, key):
+    encrypted_message = []
+    starting_index = 0
+    for letter in message:
+        # checking if the letter is alpha
+        rotation = check_alphabet_position(key[starting_index])
+        # check if letter is not alpha
+        if not letter in sorted_dictionary:
+            encrypted_message.append(letter)
+        elif letter.isalpha():
+            encrypted_message.append(rotate(letter, rotation))
+
+        # checking if keyword has reached the end
+        if starting_index == (len(key) - 1):
+            starting_index = 0
+        else:
+            starting_index += 1
+
+    return "".join(encrypted_message)
+
+
+new_message = "Hey"
+new_key = "david"
+
+print(vigenere_encryption(new_message, new_key))
