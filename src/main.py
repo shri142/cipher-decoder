@@ -13,17 +13,16 @@ class MainWindow(tkinter.Tk):
         # main window title
         self.title("Cipher decoder")
         # main window size
-        self.geometry("1320x420")
+        self.geometry("900x420")
         # main window color
         self.configure(background = "light blue")
 
 
 
+root_window = MainWindow()
 
-
-        root_window=MainWindow()
-        if __name__ == "__main__":
-            root_window.mainloop()
+if __name__ == "__main__":
+    root_window.mainloop()
 
 
 
